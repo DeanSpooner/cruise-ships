@@ -1,9 +1,9 @@
 class Ship {
-    constructor(firstPort, destination) {
-        this.destination = destination;
-        this.firstPort = firstPort;
+    constructor(firstPort) {
+        this.currentPort = firstPort;
         this.passengers = [];
         this.removedPassengers = [];
+        this.atSea = false;
     }
 
     addPassenger(name) {
@@ -17,6 +17,15 @@ class Ship {
                 this.removedPassengers.push(removed[0]);
             }
         }
+    }
+
+    setSail() {
+        this.currentPort = null;
+        this.atSea = true;
+    }
+
+    dock(anotherPort) {
+        this.currentPort = anotherPort;
     }
 }
 
