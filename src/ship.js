@@ -1,18 +1,21 @@
 class Ship {
-    constructor(firstPort) {
-        this.currentPort = firstPort;
+    constructor(itinerary) {
+        this.itinerary = itinerary;
+        this.previousPort = null;
+        this.currentPort = itinerary.ports[0];
         this.passengers = [];
         this.removedPassengers = [];
         this.atSea = false;
+        this.numberOfPastPorts = 0;
     }
 
-    addPassenger(name) {
-        this.passengers.push(name);
+    addPassenger(passName) {
+        this.passengers.push(passName);
     }
 
-    removePassenger(name) {
+    removePassenger(passName) {
         for (let i = 0; i < this.passengers.length; i++) {
-            if (this.passengers[i] = name) {
+            if (this.passengers[i] = passName) {
                 let removed = this.passengers.splice([i], 1);
                 this.removedPassengers.push(removed[0]);
             }
@@ -20,12 +23,14 @@ class Ship {
     }
 
     setSail() {
+        this.previousPort = this.currentPort;
         this.currentPort = null;
+        this.numberOfPastPorts += 1;
         this.atSea = true;
     }
 
-    dock(anotherPort) {
-        this.currentPort = anotherPort;
+    dock() {
+        this.currentPort = this.itinerary.ports[this.numberOfPastPorts];
     }
 }
 
