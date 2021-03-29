@@ -123,7 +123,7 @@ describe('setSail', () => {
 
         titanic.setSail();
 
-        expect(titanic.currentPort).toEqual(null);
+        expect(titanic.currentPort).toBeFalsy();
     });
 
     it('should set the previous port to what was current port before the method was called', () => {
@@ -138,7 +138,26 @@ describe('setSail', () => {
 
         titanic.setSail();
 
+        expect(titanic.currentPort).toBeFalsy();
+
         expect(titanic.previousPort).toEqual(liverpool);
+    });
+
+    it('cannot set sail when there are no more ports on the itinerary', () => {
+
+        const liverpool = new Port('Liverpool');
+
+        const newYork = new Port('New York');
+
+        const itin = new Itinerary([liverpool, newYork]);
+
+        const titanic = new Ship(itin);
+
+        titanic.setSail();
+
+        titanic.dock();
+
+        expect(() => titanic.setSail()).toThrowError('End of itinerary reached');
     });
 });
 
