@@ -1,209 +1,122 @@
 const Ship = require('../src/ship');
 const Port = require('../src/port');
-const Itinerary  = require('../src/itinerary');
+const Itinerary = require('../src/itinerary');
+describe('Ship', () => {
 
-describe('constructor', () => {
-    it('returns an object', () => {
+    let hull;
+    let amsterdam;
+    let itin;
+    let explorer;
 
-        const hull = new Port('Hull');
+    beforeEach(() => {
+        hull = new Port('Hull');
 
-        const amsterdam = new Port ('Amsterdam');
+        amsterdam = new Port('Amsterdam');
 
-        const itin = new Itinerary ([hull, amsterdam]);
+        itin = new Itinerary([hull, amsterdam]);
 
-        const explorer = new Ship(itin);
-
-        expect(explorer).toBeInstanceOf(Object);
+        explorer = new Ship(itin);
     });
 
-    it('inputs an argument as its first port', () => {
+    describe('constructor', () => {
+                
+        it('returns an object', () => {
+            expect(explorer).toBeInstanceOf(Object);
+        });
 
-        const hull = new Port('Hull');
+        it('inputs an argument as its first port', () => {
+            expect(explorer.currentPort).toEqual(hull);
+        });
 
-        const amsterdam = new Port ('Amsterdam');
+        it('starts with a previous port property set to null', () => {
+            expect(explorer.previousPort).toEqual(null);
+        });
 
-        const itin = new Itinerary ([hull, amsterdam]);
-
-        const explorer = new Ship(itin);
-
-        expect(explorer.currentPort).toEqual(hull);
+        it('gets added to port on instantiation', () => {
+            expect(hull.ships).toContain(explorer);
+        });
     });
 
-    it('starts with a previous port property set to null', () => {
+    describe('addPassenger', () => {
 
-        const hull = new Port('Hull');
+        it('should add passengers to the this.passengers array', () => {
 
-        const amsterdam = new Port ('Amsterdam');
+            
 
-        const itin = new Itinerary ([hull, amsterdam]);
+            explorer.addPassenger('Jack');
 
-        const explorer = new Ship(itin);
+            explorer.addPassenger('Rose');
 
-        expect(explorer.previousPort).toEqual(null);
+            expect(explorer.passengers).toEqual(['Jack', 'Rose']);
+        })
     });
 
-    it ('gets added to port on instantiation', () => {
+    describe('removePassenger', () => {
+        it('should remove passengers from the this.passengers array to this.removedPassengers array', () => {
 
-const odaiba = new Port('Odaiba');
+            explorer.passengers = ['Jack', 'Rose'];
 
-const itin = new Itinerary([odaiba]);
+            explorer.removePassenger('Jack')
 
-const fune = new Ship(itin);
-
-expect(odaiba.ships).toContain(fune);
-
-    });
-});
-
-describe('addPassenger', () => {
-    it('should add passengers to the this.passengers array', () => {
-
-        const liverpool = new Port('Liverpool');
-
-        const newYork = new Port('New York');
-
-        const itin = new Itinerary([liverpool, newYork]);
-
-        const titanic = new Ship(itin);
-
-        titanic.addPassenger('Jack');
-
-        titanic.addPassenger('Rose');
-
-        expect(titanic.passengers).toEqual(['Jack', 'Rose']);
-    })
-});
-
-describe('removePassenger', () => {
-    it('should remove passengers from the this.passengers array to this.removedPassengers array', () => {
-
-        const liverpool = new Port('Liverpool');
-
-        const newYork = new Port('New York');
-
-        const itin = new Itinerary([liverpool, newYork]);
-
-        const titanic = new Ship(itin);
-
-        titanic.passengers = ['Jack', 'Rose'];
-
-        titanic.removePassenger('Jack')
-
-        expect(titanic.passengers).toEqual(['Rose']);
-        expect(titanic.removedPassengers).toEqual(['Jack']);
-    })
-});
-
-describe('setSail', () => {
-    it('should have atSea to be false by default', () => {
-
-        const liverpool = new Port('Liverpool');
-
-        const newYork = new Port('New York');
-
-        const itin = new Itinerary([liverpool, newYork]);
-
-        const titanic = new Ship(itin);
-
-        expect(titanic.atSea).toEqual(false);
+            expect(explorer.passengers).toEqual(['Rose']);
+            expect(explorer.removedPassengers).toEqual(['Jack']);
+        })
     });
 
-    it('should set atSea to true', () => {
+    describe('setSail', () => {
+        it('should have atSea to be false by default', () => {
+            expect(explorer.atSea).toEqual(false);
+        });
 
-        const liverpool = new Port('Liverpool');
+        it('should set atSea to true', () => {
 
-        const newYork = new Port('New York');
+            explorer.setSail();
 
-        const itin = new Itinerary([liverpool, newYork]);
+            expect(explorer.atSea).toEqual(true);
+        });
 
-        const titanic = new Ship(itin);
+        it('should set the current port as null', () => {
 
-        titanic.setSail();
+            explorer.setSail();
 
-        expect(titanic.atSea).toEqual(true);
+            expect(explorer.currentPort).toBeFalsy();
+        });
+
+        it('should set the previous port to what was current port before the method was called', () => {
+
+            explorer.setSail();
+
+            expect(explorer.currentPort).toBeFalsy();
+
+            expect(explorer.previousPort).toEqual(hull);
+        });
+
+        it('cannot set sail when there are no more ports on the itinerary', () => {
+
+            explorer.setSail();
+
+            explorer.dock();
+
+            expect(() => explorer.setSail()).toThrowError('End of itinerary reached');
+        });
+
+        it('s previous port should not contain this ship any more', () => {
+
+            explorer.setSail();
+
+            expect(hull.ships).not.toContain(explorer);
+        });
     });
 
-    it('should set the current port as null', () => {
+    describe('dock', () => {
+        it('can dock at another port', () => {
 
-        const liverpool = new Port('Liverpool');
+            explorer.setSail();
 
-        const newYork = new Port('New York');
+            explorer.dock();
 
-        const itin = new Itinerary([liverpool, newYork]);
-
-        const titanic = new Ship(itin);
-
-        titanic.setSail();
-
-        expect(titanic.currentPort).toBeFalsy();
-    });
-
-    it('should set the previous port to what was current port before the method was called', () => {
-
-        const liverpool = new Port('Liverpool');
-
-        const newYork = new Port('New York');
-
-        const itin = new Itinerary([liverpool, newYork]);
-
-        const titanic = new Ship(itin);
-
-        titanic.setSail();
-
-        expect(titanic.currentPort).toBeFalsy();
-
-        expect(titanic.previousPort).toEqual(liverpool);
-    });
-
-    it('cannot set sail when there are no more ports on the itinerary', () => {
-
-        const liverpool = new Port('Liverpool');
-
-        const newYork = new Port('New York');
-
-        const itin = new Itinerary([liverpool, newYork]);
-
-        const titanic = new Ship(itin);
-
-        titanic.setSail();
-
-        titanic.dock();
-
-        expect(() => titanic.setSail()).toThrowError('End of itinerary reached');
-    });
-
-    it('s previous port should not contain this ship any more', () => {
-
-        const osaka = new Port('Osaka');
-
-        const naha = new Port('Naha');
-
-        const itin = new Itinerary([osaka, naha]);
-
-        const ryu = new Ship(itin);
-
-        ryu.setSail();
-
-        expect(osaka.ships).not.toContain(ryu);
-    });
-});
-
-describe('dock', () => {
-    it('can dock at another port', () => {
-
-        const liverpool = new Port('Liverpool');
-
-        const newYork = new Port('New York');
-
-        const itin = new Itinerary([liverpool, newYork]);
-
-        const titanic = new Ship(itin);
-
-        titanic.setSail();
-
-        titanic.dock();
-
-        expect(titanic.currentPort).toEqual(newYork);
-        expect(titanic.currentPort.ships).toContain(titanic);
+            expect(explorer.currentPort).toEqual(amsterdam);
+            expect(explorer.currentPort.ships).toContain(explorer);
+        });
     });
 });

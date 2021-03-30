@@ -1,24 +1,28 @@
 const Itinerary = require('../src/itinerary');
 const Port = require('../src/port');
 
-describe('constructor', () => {
-    it('makes an itinerary object', () => {
-const liverpool = new Port ('Liverpool');
+describe('Itinerary', () => {
+let liverpool;
 
-const newYork = new Port ('New York');
+let newYork;
 
-        const thisList = new Itinerary([liverpool, newYork]);
+let thisList;
 
-        expect(thisList).toBeInstanceOf(Object);
-    });
+beforeEach(() => {
+    liverpool = new Port('Liverpool');
+    newYork = new Port('New York');
+    thisList = new Itinerary([liverpool, newYork]);
+});
 
-    it('has a ports property', () => {
-const yokohama = new Port('Yokohama');
-
-const hongKong = new Port('Hong Kong');
-
-        const thisList = new Itinerary([yokohama, hongKong]);
-
-        expect(thisList.ports).toEqual([yokohama, hongKong]);
+    describe('constructor', () => {
+        it('makes an itinerary object', () => {
+    
+            expect(thisList).toBeInstanceOf(Object);
+        });
+    
+        it('has a ports property', () => {
+    
+            expect(thisList.ports).toEqual([liverpool, newYork]);
+        });
     });
 });
