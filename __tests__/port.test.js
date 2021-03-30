@@ -6,7 +6,7 @@ describe('Port', () => {
 
     beforeEach(() => {
         yokohama = new Port('Yokohama');
-        fune = {};
+        fune = jest.fn();
     });
 
     describe('constructor', () => {
@@ -31,7 +31,7 @@ describe('Port', () => {
     describe('removeShip', () => {
         it('removes a ship from the port', () => {
             
-            const akagi = {};
+            const akagi = jest.fn();
             
             yokohama.addShip(fune);
             

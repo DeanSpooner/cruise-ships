@@ -9,8 +9,8 @@ let newYork;
 let thisList;
 
 beforeEach(() => {
-    liverpool = new Port('Liverpool');
-    newYork = new Port('New York');
+    liverpool = jest.fn();
+    newYork = jest.fn();
     thisList = new Itinerary([liverpool, newYork]);
 });
 
