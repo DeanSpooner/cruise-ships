@@ -7,6 +7,7 @@ class Ship {
         this.removedPassengers = [];
         this.atSea = false;
         this.numberOfPastPorts = 0;
+        this.currentPort.addShip(this);
     }
 
     addPassenger(passName) {
@@ -23,11 +24,11 @@ class Ship {
     }
 
     setSail() {
-if (this.numberOfPastPorts >= (this.itinerary.ports.length - 1)) {
-        throw new Error ('End of itinerary reached');
-}
-
+        if (this.numberOfPastPorts >= (this.itinerary.ports.length - 1)) {
+            throw new Error('End of itinerary reached');
+        }
         this.previousPort = this.currentPort;
+        this.previousPort.removeShip(this);
         this.currentPort = null;
         this.numberOfPastPorts += 1;
         this.atSea = true;
@@ -35,6 +36,7 @@ if (this.numberOfPastPorts >= (this.itinerary.ports.length - 1)) {
 
     dock() {
         this.currentPort = this.itinerary.ports[this.numberOfPastPorts];
+        this.currentPort.addShip(this);
     }
 }
 

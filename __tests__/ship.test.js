@@ -41,6 +41,18 @@ describe('constructor', () => {
 
         expect(explorer.previousPort).toEqual(null);
     });
+
+    it ('gets added to port on instantiation', () => {
+
+const odaiba = new Port('Odaiba');
+
+const itin = new Itinerary([odaiba]);
+
+const fune = new Ship(itin);
+
+expect(odaiba.ships).toContain(fune);
+
+    });
 });
 
 describe('addPassenger', () => {
@@ -159,6 +171,21 @@ describe('setSail', () => {
 
         expect(() => titanic.setSail()).toThrowError('End of itinerary reached');
     });
+
+    it('s previous port should not contain this ship any more', () => {
+
+        const osaka = new Port('Osaka');
+
+        const naha = new Port('Naha');
+
+        const itin = new Itinerary([osaka, naha]);
+
+        const ryu = new Ship(itin);
+
+        ryu.setSail();
+
+        expect(osaka.ships).not.toContain(ryu);
+    });
 });
 
 describe('dock', () => {
@@ -177,5 +204,6 @@ describe('dock', () => {
         titanic.dock();
 
         expect(titanic.currentPort).toEqual(newYork);
+        expect(titanic.currentPort.ships).toContain(titanic);
     });
 });
