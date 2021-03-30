@@ -15,7 +15,7 @@ describe('Port', () => {
         });
     
         it('inputs an argument as its name', () => {
-            expect(new Port('Tynemouth').name).toEqual('Tynemouth');
+            expect(yokohama.name).toEqual('Yokohama');
         });
     });
     
