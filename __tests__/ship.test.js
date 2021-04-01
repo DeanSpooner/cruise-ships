@@ -9,9 +9,19 @@ describe('Ship', () => {
     let explorer;
 
     beforeEach(() => {
-        hull = new Port('Hull');
+        hull = {
+            addShip: jest.fn(),
+            removeShip: jest.fn(),
+            name: 'Hull',
+            ships: []
+        };
 
-        amsterdam = new Port('Amsterdam');
+        amsterdam = {
+            addShip: jest.fn(),
+            removeShip: jest.fn(),
+            name: 'Amsterdam',
+            ships: []
+        };
 
         itin = new Itinerary([hull, amsterdam]);
 
@@ -33,7 +43,7 @@ describe('Ship', () => {
         });
 
         it('gets added to port on instantiation', () => {
-            expect(hull.ships).toContain(explorer);
+            expect(hull.addShip).toHaveBeenCalledWith(explorer);
         });
     });
 
@@ -75,11 +85,12 @@ describe('Ship', () => {
             expect(explorer.atSea).toEqual(true);
         });
 
-        it('should set the current port as null', () => {
+        it('should set the current port as null and previous as previous', () => {
 
             explorer.setSail();
 
             expect(explorer.currentPort).toBeFalsy();
+            expect(hull.removeShip).toHaveBeenCalledWith(explorer);
         });
 
         it('should set the previous port to what was current port before the method was called', () => {
@@ -99,13 +110,6 @@ describe('Ship', () => {
 
             expect(() => explorer.setSail()).toThrowError('End of itinerary reached');
         });
-
-        it('s previous port should not contain this ship any more', () => {
-
-            explorer.setSail();
-
-            expect(hull.ships).not.toContain(explorer);
-        });
     });
 
     describe('dock', () => {
@@ -116,7 +120,7 @@ describe('Ship', () => {
             explorer.dock();
 
             expect(explorer.currentPort).toEqual(amsterdam);
-            expect(explorer.currentPort.ships).toContain(explorer);
+            expect(hull.addShip).toHaveBeenCalledWith(explorer);
         });
     });
 });
