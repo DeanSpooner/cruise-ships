@@ -1,0 +1,38 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#viewport {
+  height: 256px;
+  width: 640px;
+  position: relative;
+  overflow-x: auto;
+  background-image: url('../images/water0.png');
+}
+
+#ports {
+    margin-top: 96px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#ports > .port {
+    width: 64px;
+    height: 32px;
+    background-image: url('../images/port.png');
+}
+
+#ship {
+    width: 128px;
+    height: 64px;
+    background-image: url('../images/ship.png');
+    position: absolute;
+}

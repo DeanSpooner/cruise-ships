@@ -1,8 +1,15 @@
-class Itinerary {
-constructor(itinerary){
-    this.ports = itinerary;
-}
+(function exportItinerary() {
+    class Itinerary {
+        constructor(itinerary) {
+            this.ports = itinerary;
+        }
 
-}
+    }
 
-module.exports = Itinerary;
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = Itinerary;
+    } else {
+        window.Itinerary = Itinerary;
+    }
+
+}());
