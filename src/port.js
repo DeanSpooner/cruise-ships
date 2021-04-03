@@ -1,7 +1,8 @@
 (function exportPort() {
     class Port {
-        constructor(portName) {
+        constructor(portName, japaneseName) {
             this.name = portName;
+            this.japaneseName = japaneseName;
             this.ships = [];
         }
 

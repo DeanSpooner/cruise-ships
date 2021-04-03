@@ -36,3 +36,63 @@ body {
     background-image: url('../images/ship.png');
     position: absolute;
 }
+
+#sailbutton {
+    border: 0;
+    background-color: rgb(79, 0, 101);
+    border-bottom: 4px solid rgb(111, 0, 145);
+    color: #fff;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 2rem;
+    padding: 40px 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+#sailbutton:focus {
+    background-color: rgb(111, 0, 145);
+    border-bottom-width: 0;
+}
+
+#message {
+    padding: 16px 0px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 1.2rem;
+    position: absolute;
+    width: 50%;
+    top: 0;
+    left: 0;
+    border-top: 3px solid black;
+    background-color: #fff;
+    text-align: center;
+  }
+
+  #message2 {
+    padding: 16px 0px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 1.2rem;
+    position: absolute;
+    width: 50%;
+    top: 0;
+    right: 0;
+    border-top: 3px solid black;
+    background-color: rgb(21, 4, 171);
+    color: #fff;
+    text-align: center;
+  }
+
+  #message3 {
+    padding: 16px 0px;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 1.2rem;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-top: 3px solid black;
+    background-color: rgb(171, 15, 4);
+    color: #fff;
+    text-align: center;
+  }

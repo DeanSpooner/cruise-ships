@@ -8,6 +8,7 @@
             this.removedPassengers = [];
             this.atSea = false;
             this.numberOfPastPorts = 0;
+            this.nextPort = itinerary.ports[1];
             this.currentPort.addShip(this);
         }
 
@@ -31,12 +32,14 @@
             this.previousPort = this.currentPort;
             this.previousPort.removeShip(this);
             this.currentPort = null;
+            this.nextPort = null;
             this.numberOfPastPorts += 1;
             this.atSea = true;
         }
 
         dock() {
             this.currentPort = this.itinerary.ports[this.numberOfPastPorts];
+            this.nextPort = this.itinerary.ports[this.numberOfPastPorts + 1];
             this.currentPort.addShip(this);
         }
     }

@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <title>The Cruise Ship Simulator</title>
 </head>
 <body>
+    <div id="screenTop"></div>
     
 <div id="viewport">
     <div id="ports"></div>
     <div id="ship"></div>
 </div>
+
+<button id="sailbutton">Click to sail! 航海しよう！</button>
 
 <script src="./src/controller.js"></script>
 <script src="./src/port.js"></script>
@@ -22,16 +27,16 @@
 
 <script>
     const itinerary = new Itinerary([
-        new Port('Tokyo'),
-        new Port('Yokohama'),
-        new Port ('Hamamatsu'),
-        new Port('Osaka'),
-        new Port('Kobe')
+        new Port('Tokyo', '東京'),
+        new Port('Yokohama', '横浜'),
+        new Port ('Hamamatsu', '浜松'),
+        new Port('Osaka', '大阪'),
+        new Port('Kobe', '神戸')
     ]);
     const fune = new Ship(itinerary);
-    const controller = new Controller();
+    const controller = new Controller(fune);
     controller.renderPorts(itinerary.ports);
-    controller.renderShip(fune);
+    controller.renderShip();
 </script>
 </body>
 </html>
